@@ -50,12 +50,12 @@ namespace mgo
     class Matrix final
     {
     private:
-        typedef std::size_t                                    Uint;
-        typedef T                                              Type;
-        typedef T&                                             Reference;
-        typedef const T&                                       ConstReference;
-        typedef T*                                             Iterator;
-        typedef const T*                                       ConstIterator;
+        typedef std::size_t                                 Uint;
+        typedef T                                           Type;
+        typedef T&                                          Reference;
+        typedef const T&                                    ConstReference;
+        typedef T*                                          Iterator;
+        typedef const T*                                    ConstIterator;
         typedef std::reverse_iterator<T*>                   ReverseIterator;
         typedef std::reverse_iterator<const T*>             ConstReverseIterator;
         typedef Matrix<T, M, N>                             MatrixMxN;
