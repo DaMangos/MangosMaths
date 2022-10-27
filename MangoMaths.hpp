@@ -71,7 +71,7 @@ namespace mgo
     public:
         enum InitType {columns, rows};
         
-        constexpr Matrix()
+        constexpr Matrix() noexcept
         :   elems_{}
         {}
         
@@ -503,7 +503,7 @@ namespace mgo
         
         Type x, y;
         
-        constexpr Matrix()
+        constexpr Matrix() noexcept
         :   x(0), y(0)
         {}
         
@@ -694,7 +694,7 @@ namespace mgo
         
         Type x, y, z;
         
-        constexpr Matrix()
+        constexpr Matrix() noexcept
         :   x(0), y(0), z(0)
         {}
         
@@ -898,7 +898,7 @@ namespace mgo
     public:
         Type x, y, z, w;
         
-        constexpr Matrix()
+        constexpr Matrix() noexcept
         :   x(0), y(0), z(0), w(0)
         {}
         
@@ -1066,11 +1066,11 @@ namespace mgo
     };
     
     template<ArithmeticType T, std::size_t M, std::size_t N>
-    bool operator==(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y)
+    constexpr bool operator==(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y) noexcept
     {return std::equal(x.begin(), x.end(), y.begin(), y.end());}
     
     template<ArithmeticType T, std::size_t M, std::size_t N>
-    bool operator!=(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y)
+    constexpr bool operator!=(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y) noexcept
     {return !(x == y);}
 }
 
@@ -1083,7 +1083,7 @@ namespace std
         typedef T Type;
         
     public:
-        constexpr size_t operator()(const mgo::Matrix<T, M, N>& value) const
+        constexpr size_t operator()(const mgo::Matrix<T, M, N>& value) const noexcept
         {
             size_t out = 0;
             for (int k = 0; k < M * N; k++)
@@ -1093,7 +1093,7 @@ namespace std
     };
     
     template<mgo::ArithmeticType T, size_t M, size_t N>
-    ostream& operator<<(ostream& stream, const mgo::Matrix<T, M, N>& value)
+    ostream& operator<<(ostream& stream, const mgo::Matrix<T, M, N>& value) noexcept
     {
         for (size_t i = 0; i < M; i++)
         {
@@ -1106,7 +1106,7 @@ namespace std
 }
     
 template<mgo::ArithmeticType T, std::size_t M, std::size_t N>
-mgo::Matrix<T, M, N> fmod(const mgo::Matrix<T, M, N>& A, const mgo::Matrix<T, M, N>& B)
+constexpr mgo::Matrix<T, M, N> fmod(const mgo::Matrix<T, M, N>& A, const mgo::Matrix<T, M, N>& B) noexcept
 {
     mgo::Matrix<T, M, N> out;
     for (std::size_t k = 0; k < M * N; k++)
@@ -1115,7 +1115,7 @@ mgo::Matrix<T, M, N> fmod(const mgo::Matrix<T, M, N>& A, const mgo::Matrix<T, M,
 }
 
 template<mgo::ArithmeticType T, std::size_t M, std::size_t N>
-mgo::Matrix<T, M, N> fabs(const mgo::Matrix<T, M, N>& value)
+constexpr mgo::Matrix<T, M, N> fabs(const mgo::Matrix<T, M, N>& value) noexcept
 {
     mgo::Matrix<T, M, N> out;
     for (std::size_t k = 0; k < M * N; k++)
@@ -2177,4 +2177,3 @@ typedef mgo::Matrix<long double, 4, 1> long_double4;
 typedef mgo::Matrix<long double, 3, 1> long_double3;
 typedef mgo::Matrix<long double, 2, 1> long_double2;
 #endif
-
