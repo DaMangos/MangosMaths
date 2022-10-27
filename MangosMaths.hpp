@@ -98,24 +98,24 @@ namespace mgo
         :
         elems_{}
         {
-            auto it = list.Begin();
+            auto it = list.begin();
             if (space == rows)
                 for (Uint i = 0; i < M; i++)
-                    for (Uint j = 0; j < N && it != list.End(); j++, it++)
+                    for (Uint j = 0; j < N && it != list.end(); j++, it++)
                         (*this)(i, j) = *it;
             if (space == columns)
                 for (Uint j = 0; j < N; j++)
-                    for (Uint i = 0; i < M && it != list.End(); i++, it++)
+                    for (Uint i = 0; i < M && it != list.end(); i++, it++)
                         (*this)(i, j) = *it;
         }
         
-        constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
+        constexpr Matrix(std::initializer_list<Type> list) noexcept
         requires (M == 1 || N == 1)
         :
         elems_{}
         {
-            auto it = list.Begin();
-            for (Uint k = 0; k < M * N && it != list.End(); k++, it++)
+            auto it = list.begin();
+            for (Uint k = 0; k < M * N && it != list.end(); k++, it++)
                 (*this)[k] = *it;
         }
         
@@ -124,15 +124,15 @@ namespace mgo
         :
         elems_{}
         {
-            auto it = list.Begin();
+            auto it = list.begin();
             if (space == rows)
                 for (Uint i = 0; i < M; i++, it++)
-                    for (Uint j = 0; j < N && it != list.End(); j++)
+                    for (Uint j = 0; j < N && it != list.end(); j++)
                         if (j < M)
                             (*this)(i, j) = (*it)(j, 0);
             if (space == columns)
                 for (Uint j = 0; j < N; j++, it++)
-                    for (Uint i = 0; i < M && it != list.End(); i++)
+                    for (Uint i = 0; i < M && it != list.end(); i++)
                         (*this)(i, j) = (*it)(i, 0);
         }
         
@@ -141,14 +141,14 @@ namespace mgo
         :
         elems_{}
         {
-            auto it = list.Begin();
+            auto it = list.begin();
             if (space == rows)
                 for (Uint i = 0; i < M; i++, it++)
-                    for (Uint j = 0; j < N && it != list.End(); j++)
+                    for (Uint j = 0; j < N && it != list.end(); j++)
                         (*this)(i, j) = (*it)(0, j);
             if (space == columns)
                 for (Uint j = 0; j < N; j++, it++)
-                    for (Uint i = 0; i < M && it != list.End(); i++)
+                    for (Uint i = 0; i < M && it != list.end(); i++)
                         if (i < N)
                             (*this)(i, j) = (*it)(0, i);
         }
@@ -523,10 +523,10 @@ namespace mgo
         y(static_cast<T>(value.y))
         {}
         
-        constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
+        constexpr Matrix(std::initializer_list<Type> list) noexcept
         :
-        x(list.size() > 0 ? *(list.Begin())     : 0),
-        y(list.size() > 1 ? *(list.Begin() + 1) : 0)
+        x(list.size() > 0 ? *(list.begin())     : 0),
+        y(list.size() > 1 ? *(list.begin() + 1) : 0)
         {}
         
         constexpr Matrix(Type x, Type y, InitType coords = cartesian) noexcept
@@ -721,11 +721,11 @@ namespace mgo
         z(static_cast<T>(value.z))
         {}
         
-        constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
+        constexpr Matrix(std::initializer_list<Type> list) noexcept
         :
-        x(list.size() > 0 ? *(list.Begin())     : 0),
-        y(list.size() > 1 ? *(list.Begin() + 1) : 0),
-        z(list.size() > 2 ? *(list.Begin() + 2) : 0)
+        x(list.size() > 0 ? *(list.begin())     : 0),
+        y(list.size() > 1 ? *(list.begin() + 1) : 0),
+        z(list.size() > 2 ? *(list.begin() + 2) : 0)
         {}
         
         constexpr Matrix(Type x, Type y, Type z, InitType coords = cartesian) noexcept
@@ -934,10 +934,10 @@ namespace mgo
         
         constexpr Matrix(std::initializer_list<Type> list) noexcept
         :
-        x(list.size() > 0 ? *(list.Begin())     : 0),
-        y(list.size() > 1 ? *(list.Begin() + 1) : 0),
-        z(list.size() > 2 ? *(list.Begin() + 2) : 0),
-        w(list.size() > 3 ? *(list.Begin() + 3) : 0)
+        x(list.size() > 0 ? *(list.begin())     : 0),
+        y(list.size() > 1 ? *(list.begin() + 1) : 0),
+        z(list.size() > 2 ? *(list.begin() + 2) : 0),
+        w(list.size() > 3 ? *(list.begin() + 3) : 0)
         {}
         
         template<Uint P>
