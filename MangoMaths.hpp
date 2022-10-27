@@ -1,5 +1,4 @@
-#ifndef MangoMaths_hpp
-#define MangoMaths_hpp
+#pragma once
 
 #ifdef MGO_USE_MATHS_DEFINES
 #define _USE_MATHS_DEFINES
@@ -38,6 +37,8 @@
 #include <functional>
 #include <stdexcept>
 #include <cmath>
+#include <compare>
+#include <algorithm>
 #include <ostream>
 
 namespace mgo
@@ -50,12 +51,12 @@ namespace mgo
     class Matrix final
     {
     private:
-        typedef std::size_t                                 Uint;
-        typedef T                                           Type;
-        typedef T&                                          Reference;
-        typedef const T&                                    ConstReference;
-        typedef T*                                          Iterator;
-        typedef const T*                                    ConstIterator;
+        typedef std::size_t                                    Uint;
+        typedef T                                              Type;
+        typedef T&                                             Reference;
+        typedef const T&                                       ConstReference;
+        typedef T*                                             Iterator;
+        typedef const T*                                       ConstIterator;
         typedef std::reverse_iterator<T*>                   ReverseIterator;
         typedef std::reverse_iterator<const T*>             ConstReverseIterator;
         typedef Matrix<T, M, N>                             MatrixMxN;
@@ -513,24 +514,24 @@ namespace mgo
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 2, 1>& value) noexcept
         :   x(static_cast<T>(value.x)),
-            y(static_cast<T>(value.y))
+        y(static_cast<T>(value.y))
         {}
         
         constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
         :   x(list.size() > 0 ? *(list.begin())     : 0),
-            y(list.size() > 1 ? *(list.begin() + 1) : 0)
+        y(list.size() > 1 ? *(list.begin() + 1) : 0)
         {}
         
         constexpr Matrix(Type x, Type y, InitType coords = cartesian) noexcept
         requires (std::is_floating_point_v<Type>)
         :   x(coords ? x : fabs(x) * cos(y)),
-            y(coords ? y : fabs(x) * sin(y))
+        y(coords ? y : fabs(x) * sin(y))
         {}
         
         template<Uint P>
         constexpr explicit Matrix(const Matrix<Type, P, 1>& value) noexcept
         :   x(P > 0 ? value[0] : 0),
-            y(P > 1 ? value[1] : 0)
+        y(P > 1 ? value[1] : 0)
         {}
         
         constexpr Iterator begin() noexcept
@@ -704,28 +705,28 @@ namespace mgo
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 3, 1>& value) noexcept
         :   x(static_cast<T>(value.x)),
-            y(static_cast<T>(value.y)),
-            z(static_cast<T>(value.z))
+        y(static_cast<T>(value.y)),
+        z(static_cast<T>(value.z))
         {}
         
         constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
         :   x(list.size() > 0 ? *(list.begin())     : 0),
-            y(list.size() > 1 ? *(list.begin() + 1) : 0),
-            z(list.size() > 2 ? *(list.begin() + 2) : 0)
+        y(list.size() > 1 ? *(list.begin() + 1) : 0),
+        z(list.size() > 2 ? *(list.begin() + 2) : 0)
         {}
         
         constexpr Matrix(Type x, Type y, Type z, InitType coords = cartesian) noexcept
         requires (std::is_floating_point_v<Type>)
         :   x(coords ? x : fabs(x) * sin(y) * cos(z)),
-            y(coords ? y : fabs(x) * sin(y) * sin(z)),
-            z(coords ? z : fabs(x) * cos(y))
+        y(coords ? y : fabs(x) * sin(y) * sin(z)),
+        z(coords ? z : fabs(x) * cos(y))
         {}
         
         template<Uint P>
         constexpr explicit Matrix(const Matrix<Type, P, 1>& value) noexcept
         :   x(P > 0 ? value[0] : 0),
-            y(P > 1 ? value[1] : 0),
-            z(P > 2 ? value[2] : 0)
+        y(P > 1 ? value[1] : 0),
+        z(P > 2 ? value[2] : 0)
         {}
         
         constexpr Iterator begin() noexcept
@@ -908,24 +909,24 @@ namespace mgo
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 4, 1>& value) noexcept
         :   x(static_cast<T>(value.x)),
-            y(static_cast<T>(value.y)),
-            z(static_cast<T>(value.z)),
-            w(static_cast<T>(value.w))
+        y(static_cast<T>(value.y)),
+        z(static_cast<T>(value.z)),
+        w(static_cast<T>(value.w))
         {}
         
         constexpr Matrix(std::initializer_list<Type> list) noexcept
         :   x(list.size() > 0 ? *(list.begin())     : 0),
-            y(list.size() > 1 ? *(list.begin() + 1) : 0),
-            z(list.size() > 2 ? *(list.begin() + 2) : 0),
-            w(list.size() > 3 ? *(list.begin() + 3) : 0)
+        y(list.size() > 1 ? *(list.begin() + 1) : 0),
+        z(list.size() > 2 ? *(list.begin() + 2) : 0),
+        w(list.size() > 3 ? *(list.begin() + 3) : 0)
         {}
         
         template<Uint P>
         constexpr explicit Matrix(const Matrix<Type, P, 1>& value) noexcept
         :   x(P > 0 ? value[0] : 0),
-            y(P > 1 ? value[1] : 0),
-            z(P > 2 ? value[2] : 0),
-            w(P > 3 ? value[3] : 0)
+        y(P > 1 ? value[1] : 0),
+        z(P > 2 ? value[2] : 0),
+        w(P > 3 ? value[3] : 0)
         {}
         
         constexpr Iterator begin() noexcept
@@ -1063,6 +1064,14 @@ namespace mgo
         requires (std::is_floating_point_v<Type>)
         {return *this / this->Length();}
     };
+    
+    template<ArithmeticType T, std::size_t M, std::size_t N>
+    bool operator==(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y)
+    {return std::equal(x.begin(), x.end(), y.begin(), y.end());}
+    
+    template<ArithmeticType T, std::size_t M, std::size_t N>
+    bool operator!=(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y)
+    {return !(x == y);}
 }
 
 namespace std
@@ -2169,4 +2178,3 @@ typedef mgo::Matrix<long double, 3, 1> long_double3;
 typedef mgo::Matrix<long double, 2, 1> long_double2;
 #endif
 
-#endif /* MangoMaths_h */
