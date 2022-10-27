@@ -6,6 +6,7 @@ This container acts very similar to a std::array holding M * N asthmatic types a
 To access common typedef of the matrices then define MGO_USE_MATRIX_TYPES and to access series of mathatical constent macros then define MGO_USE_MATHS_DEFINES. 
 
 Element access
+--------------
 
   At                            returns the element at the i, j location with bounds cheacking. O(1)
 
@@ -15,6 +16,7 @@ Element access
 
 
 Iterators
+---------
 
   Begin                         returns an iterator to the beginning. O(1)
   
@@ -34,6 +36,7 @@ Iterators
   
   
 Operations
+----------
 
   Fill                          Fill the container with specified value. O(N * M)
   
