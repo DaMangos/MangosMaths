@@ -3,7 +3,7 @@ mgo::Matrix is a container that encapsulates fixed M x N size Matrix.
 
 This container acts very similar to a std::array holding M * N asthmatic types and has same semantics as a struct holding a C-style array. However When (M, N) equal (2, 1), (3, 1), or (4, 1) This container has same semantics as a struct holding 2, 3, or 4 asthmatic types. As this container is ment to mimic a M x N matrix, either M or N must be geater than 1 and M and N must be greater than 0 so the smallest matrix one can create is a 2 element matrix i.e. 2 x 1 or 1 x 2.
 
-To access common typedef of the matrices then define MGO_USE_MATRIX_TYPES and to access series of mathatical constent macros then define MGO_USE_MATHS_DEFINES. 
+To access common typedef of the matrices then define MGO_USE_MATRIX_TYPEDEF and to access series of mathatical constent macros then define MGO_USE_MATHS_DEFINES. 
 
 Element access
 --------------
@@ -82,8 +82,3 @@ Operations
 
   Cross(vector)                                 :Finds the dot product on two vectors. O(M * (M -1))
   (requires N = 1 && N = 3 && floating point)
-
-  
-
-
-
