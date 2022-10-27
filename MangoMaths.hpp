@@ -2,7 +2,6 @@
 
 #ifdef MGO_USE_MATHS_DEFINES
 #define _USE_MATHS_DEFINES
-/*  An extension of cmath's mathematical constant.                          */
 #define M_4PI       12.5663706143591729538505735331180115   /* 4pi          */
 #define M_3PI       9.42477796076937971538793014983850865   /* 3pi          */
 #define M_2PI       6.28318530717958647692528676655900577   /* 2pi          */
@@ -10,7 +9,6 @@
 #define M_4PI_3     4.18879020478639098461685784437267051   /* 4pi/4        */
 #define M_3PI_4     2.35619449019234492884698253745962716   /* 3pi/4        */
 #define M_2PI_3     2.09439510239319549230842892218633526   /* 2pi/3        */
-/*  Mathematical Constant and the as floats.                                */
 #define M_Ef        2.71828182845904523536028747135266250f  /* e            */
 #define M_LOG2Ef    1.44269504088896340735992468100189214f  /* log2(e)      */
 #define M_LOG10Ef   0.43429448190325182765112891891660508f  /* log10(e)     */
@@ -37,7 +35,6 @@
 #include <functional>
 #include <stdexcept>
 #include <cmath>
-#include <compare>
 #include <algorithm>
 #include <ostream>
 
@@ -51,12 +48,12 @@ namespace mgo
     class Matrix final
     {
     private:
-        typedef std::size_t                                    Uint;
-        typedef T                                              Type;
-        typedef T&                                             Reference;
-        typedef const T&                                       ConstReference;
-        typedef T*                                             Iterator;
-        typedef const T*                                       ConstIterator;
+        typedef std::size_t                                 Uint;
+        typedef T                                           Type;
+        typedef T&                                          Reference;
+        typedef const T&                                    ConstReference;
+        typedef T*                                          Iterator;
+        typedef const T*                                    ConstIterator;
         typedef std::reverse_iterator<T*>                   ReverseIterator;
         typedef std::reverse_iterator<const T*>             ConstReverseIterator;
         typedef Matrix<T, M, N>                             MatrixMxN;
@@ -72,12 +69,14 @@ namespace mgo
         enum InitType {columns, rows};
         
         constexpr Matrix() noexcept
-        :   elems_{}
+        :
+        elems_{}
         {}
         
         constexpr explicit Matrix(Type value) noexcept
         requires (M > 1 && N > 1)
-        :   elems_{}
+        :
+        elems_{}
         {
             for (Uint k = 0; k < M && k < N; k++)
                 (*this)(k, k) = value;
@@ -96,95 +95,99 @@ namespace mgo
         
         constexpr Matrix(std::initializer_list<Type> list, InitType space = rows) noexcept
         requires (N > 1 && M > 1)
-        :   elems_{}
+        :
+        elems_{}
         {
-            auto it = list.begin();
+            auto it = list.Begin();
             if (space == rows)
                 for (Uint i = 0; i < M; i++)
-                    for (Uint j = 0; j < N && it != list.end(); j++, it++)
+                    for (Uint j = 0; j < N && it != list.End(); j++, it++)
                         (*this)(i, j) = *it;
             if (space == columns)
                 for (Uint j = 0; j < N; j++)
-                    for (Uint i = 0; i < M && it != list.end(); i++, it++)
+                    for (Uint i = 0; i < M && it != list.End(); i++, it++)
                         (*this)(i, j) = *it;
         }
         
         constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
         requires (M == 1 || N == 1)
-        :   elems_{}
+        :
+        elems_{}
         {
-            auto it = list.begin();
-            for (Uint k = 0; k < M * N && it != list.end(); k++, it++)
+            auto it = list.Begin();
+            for (Uint k = 0; k < M * N && it != list.End(); k++, it++)
                 (*this)[k] = *it;
         }
         
         constexpr Matrix(const std::initializer_list<VectorM>& list, InitType space = columns) noexcept
         requires (M > 1 && N > 1)
-        :   elems_{}
+        :
+        elems_{}
         {
-            auto it = list.begin();
+            auto it = list.Begin();
             if (space == rows)
                 for (Uint i = 0; i < M; i++, it++)
-                    for (Uint j = 0; j < N && it != list.end(); j++)
+                    for (Uint j = 0; j < N && it != list.End(); j++)
                         if (j < M)
                             (*this)(i, j) = (*it)(j, 0);
             if (space == columns)
                 for (Uint j = 0; j < N; j++, it++)
-                    for (Uint i = 0; i < M && it != list.end(); i++)
+                    for (Uint i = 0; i < M && it != list.End(); i++)
                         (*this)(i, j) = (*it)(i, 0);
         }
         
         constexpr Matrix(const std::initializer_list<Matrix1xN>& list, InitType space = rows) noexcept
         requires (M > 1 && N > 1)
-        :   elems_{}
+        :
+        elems_{}
         {
-            auto it = list.begin();
+            auto it = list.Begin();
             if (space == rows)
                 for (Uint i = 0; i < M; i++, it++)
-                    for (Uint j = 0; j < N && it != list.end(); j++)
+                    for (Uint j = 0; j < N && it != list.End(); j++)
                         (*this)(i, j) = (*it)(0, j);
             if (space == columns)
                 for (Uint j = 0; j < N; j++, it++)
-                    for (Uint i = 0; i < M && it != list.end(); i++)
+                    for (Uint i = 0; i < M && it != list.End(); i++)
                         if (i < N)
                             (*this)(i, j) = (*it)(0, i);
         }
         
-        constexpr Iterator begin() noexcept
+        constexpr Iterator Begin() noexcept
         {return Iterator(this->elems_);}
         
-        constexpr ConstIterator begin() const noexcept
+        constexpr ConstIterator Begin() const noexcept
         {return ConstIterator(this->elems_);}
         
-        constexpr Iterator end() noexcept
+        constexpr Iterator End() noexcept
         {return Iterator(this->elems_) + M * N;}
         
-        constexpr ConstIterator end() const noexcept
+        constexpr ConstIterator End() const noexcept
         {return ConstIterator(this->elems_) + M * N;}
         
-        constexpr ReverseIterator rbegin() noexcept
-        {return ReverseIterator(this->end());}
+        constexpr ReverseIterator ReverseBegin() noexcept
+        {return ReverseIterator(this->End());}
         
-        constexpr ConstReverseIterator rbegin() const noexcept
-        {return ConstReverseIterator(this->end());}
+        constexpr ConstReverseIterator ReverseBegin() const noexcept
+        {return ConstReverseIterator(this->End());}
         
-        constexpr ReverseIterator rend() noexcept
-        {return ReverseIterator(this->begin());}
+        constexpr ReverseIterator ReverseEnd() noexcept
+        {return ReverseIterator(this->Begin());}
         
-        constexpr ConstReverseIterator rend() const noexcept
-        {return ConstReverseIterator(this->begin());}
+        constexpr ConstReverseIterator ReverseEnd() const noexcept
+        {return ConstReverseIterator(this->Begin());}
         
-        constexpr ConstIterator cbegin() const noexcept
-        {return begin();}
+        constexpr ConstIterator ConstBegin() const noexcept
+        {return Begin();}
         
-        constexpr ConstIterator cend() const noexcept
-        {return end();}
+        constexpr ConstIterator ConstEnd() const noexcept
+        {return End();}
         
-        constexpr ConstReverseIterator crbegin() const noexcept
-        {return rbegin();}
+        constexpr ConstReverseIterator ConstReverseBegin() const noexcept
+        {return ReverseBegin();}
         
-        constexpr ConstReverseIterator crend() const noexcept
-        {return rend();}
+        constexpr ConstReverseIterator ConstReverseEnd() const noexcept
+        {return ReverseEnd();}
         
         constexpr Reference At(Uint i, Uint j)
         {
@@ -504,71 +507,77 @@ namespace mgo
         Type x, y;
         
         constexpr Matrix() noexcept
-        :   x(0), y(0)
+        :
+        x(0), y(0)
         {}
         
         constexpr explicit Matrix(Type value) noexcept
-        :   x(value), y(value)
+        :
+        x(value), y(value)
         {}
         
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 2, 1>& value) noexcept
-        :   x(static_cast<T>(value.x)),
+        :
+        x(static_cast<T>(value.x)),
         y(static_cast<T>(value.y))
         {}
         
         constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
-        :   x(list.size() > 0 ? *(list.begin())     : 0),
-        y(list.size() > 1 ? *(list.begin() + 1) : 0)
+        :
+        x(list.size() > 0 ? *(list.Begin())     : 0),
+        y(list.size() > 1 ? *(list.Begin() + 1) : 0)
         {}
         
         constexpr Matrix(Type x, Type y, InitType coords = cartesian) noexcept
         requires (std::is_floating_point_v<Type>)
-        :   x(coords ? x : fabs(x) * cos(y)),
+        :
+        x(coords ? x : fabs(x) * cos(y)),
         y(coords ? y : fabs(x) * sin(y))
         {}
         
         template<Uint P>
         constexpr explicit Matrix(const Matrix<Type, P, 1>& value) noexcept
-        :   x(P > 0 ? value[0] : 0),
+        :
+        x(P > 0 ? value[0] : 0),
         y(P > 1 ? value[1] : 0)
         {}
         
-        constexpr Iterator begin() noexcept
+        constexpr Iterator Begin() noexcept
         {return Iterator(*this);}
         
-        constexpr ConstIterator begin() const noexcept
+        constexpr ConstIterator Begin() const noexcept
         {return ConstIterator(*this);}
         
-        constexpr Iterator end() noexcept
+        constexpr Iterator End() noexcept
         {return Iterator(*this) + 2;}
         
-        constexpr ConstIterator end() const noexcept
+        constexpr ConstIterator End() const noexcept
         {return ConstIterator(*this) + 2;}
         
-        constexpr ReverseIterator rbegin() noexcept
-        {return ReverseIterator(this->end());}
+        constexpr ReverseIterator ReverseBegin() noexcept
+        {return ReverseIterator(this->End());}
         
-        constexpr ConstReverseIterator rbegin() const noexcept
-        {return ConstReverseIterator(this->end());}
+        constexpr ConstReverseIterator ReverseBegin() const noexcept
+        {return ConstReverseIterator(this->End());}
         
-        constexpr ReverseIterator rend() noexcept
-        {return ReverseIterator(this->begin());}
+        constexpr ReverseIterator ReverseEnd() noexcept
+        {return ReverseIterator(this->Begin());}
         
-        constexpr ConstReverseIterator rend() const noexcept
-        {return ConstReverseIterator(this->begin());}
+        constexpr ConstReverseIterator ReverseEnd() const noexcept
+        {return ConstReverseIterator(this->Begin());}
         
-        constexpr ConstIterator cbegin() const noexcept
-        {return begin();}
+        constexpr ConstIterator ConstBegin() const noexcept
+        {return Begin();}
         
-        constexpr ConstIterator cend() const noexcept
-        {return end();}
+        constexpr ConstIterator ConstEnd() const noexcept
+        {return End();}
         
-        constexpr ConstReverseIterator crbegin() const noexcept
-        {return rbegin();}
+        constexpr ConstReverseIterator ConstReverseBegin() const noexcept
+        {return ReverseBegin();}
         
-        constexpr ConstReverseIterator crend() const noexcept
-        {return rend();}
+        constexpr ConstReverseIterator ConstReverseEnd() const noexcept
+        {return ReverseEnd();}
         
         constexpr Reference At(Uint i, Uint j)
         {
@@ -695,75 +704,81 @@ namespace mgo
         Type x, y, z;
         
         constexpr Matrix() noexcept
-        :   x(0), y(0), z(0)
+        :
+        x(0), y(0), z(0)
         {}
         
         constexpr explicit Matrix(Type value) noexcept
-        :   x(value), y(value), z(value)
+        :
+        x(value), y(value), z(value)
         {}
         
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 3, 1>& value) noexcept
-        :   x(static_cast<T>(value.x)),
+        :
+        x(static_cast<T>(value.x)),
         y(static_cast<T>(value.y)),
         z(static_cast<T>(value.z))
         {}
         
         constexpr explicit Matrix(std::initializer_list<Type> list) noexcept
-        :   x(list.size() > 0 ? *(list.begin())     : 0),
-        y(list.size() > 1 ? *(list.begin() + 1) : 0),
-        z(list.size() > 2 ? *(list.begin() + 2) : 0)
+        :
+        x(list.size() > 0 ? *(list.Begin())     : 0),
+        y(list.size() > 1 ? *(list.Begin() + 1) : 0),
+        z(list.size() > 2 ? *(list.Begin() + 2) : 0)
         {}
         
         constexpr Matrix(Type x, Type y, Type z, InitType coords = cartesian) noexcept
         requires (std::is_floating_point_v<Type>)
-        :   x(coords ? x : fabs(x) * sin(y) * cos(z)),
+        :
+        x(coords ? x : fabs(x) * sin(y) * cos(z)),
         y(coords ? y : fabs(x) * sin(y) * sin(z)),
         z(coords ? z : fabs(x) * cos(y))
         {}
         
         template<Uint P>
         constexpr explicit Matrix(const Matrix<Type, P, 1>& value) noexcept
-        :   x(P > 0 ? value[0] : 0),
+        :
+        x(P > 0 ? value[0] : 0),
         y(P > 1 ? value[1] : 0),
         z(P > 2 ? value[2] : 0)
         {}
         
-        constexpr Iterator begin() noexcept
+        constexpr Iterator Begin() noexcept
         {return Iterator(*this);}
         
-        constexpr ConstIterator begin() const noexcept
+        constexpr ConstIterator Begin() const noexcept
         {return ConstIterator(*this);}
         
-        constexpr Iterator end() noexcept
+        constexpr Iterator End() noexcept
         {return Iterator(*this) + 3;}
         
-        constexpr ConstIterator end() const noexcept
+        constexpr ConstIterator End() const noexcept
         {return ConstIterator(*this) + 3;}
         
-        constexpr ReverseIterator rbegin() noexcept
-        {return ReverseIterator(this->end());}
+        constexpr ReverseIterator ReverseBegin() noexcept
+        {return ReverseIterator(this->End());}
         
-        constexpr ConstReverseIterator rbegin() const noexcept
-        {return ConstReverseIterator(this->end());}
+        constexpr ConstReverseIterator ReverseBegin() const noexcept
+        {return ConstReverseIterator(this->End());}
         
-        constexpr ReverseIterator rend() noexcept
-        {return ReverseIterator(this->begin());}
+        constexpr ReverseIterator ReverseEnd() noexcept
+        {return ReverseIterator(this->Begin());}
         
-        constexpr ConstReverseIterator rend() const noexcept
-        {return ConstReverseIterator(this->begin());}
+        constexpr ConstReverseIterator ReverseEnd() const noexcept
+        {return ConstReverseIterator(this->Begin());}
         
-        constexpr ConstIterator cbegin() const noexcept
-        {return begin();}
+        constexpr ConstIterator ConstBegin() const noexcept
+        {return Begin();}
         
-        constexpr ConstIterator cend() const noexcept
-        {return end();}
+        constexpr ConstIterator ConstEnd() const noexcept
+        {return End();}
         
-        constexpr ConstReverseIterator crbegin() const noexcept
-        {return rbegin();}
+        constexpr ConstReverseIterator ConstReverseBegin() const noexcept
+        {return ReverseBegin();}
         
-        constexpr ConstReverseIterator crend() const noexcept
-        {return rend();}
+        constexpr ConstReverseIterator ConstReverseEnd() const noexcept
+        {return ReverseEnd();}
         
         constexpr Reference At(Uint i, Uint j)
         {
@@ -899,71 +914,76 @@ namespace mgo
         Type x, y, z, w;
         
         constexpr Matrix() noexcept
-        :   x(0), y(0), z(0), w(0)
+        :
+        x(0), y(0), z(0), w(0)
         {}
         
         constexpr explicit Matrix(Type value) noexcept
-        :   x(value), y(value), z(value), w(value)
+        :
+        x(value), y(value), z(value), w(value)
         {}
         
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 4, 1>& value) noexcept
-        :   x(static_cast<T>(value.x)),
+        :
+        x(static_cast<T>(value.x)),
         y(static_cast<T>(value.y)),
         z(static_cast<T>(value.z)),
         w(static_cast<T>(value.w))
         {}
         
         constexpr Matrix(std::initializer_list<Type> list) noexcept
-        :   x(list.size() > 0 ? *(list.begin())     : 0),
-        y(list.size() > 1 ? *(list.begin() + 1) : 0),
-        z(list.size() > 2 ? *(list.begin() + 2) : 0),
-        w(list.size() > 3 ? *(list.begin() + 3) : 0)
+        :
+        x(list.size() > 0 ? *(list.Begin())     : 0),
+        y(list.size() > 1 ? *(list.Begin() + 1) : 0),
+        z(list.size() > 2 ? *(list.Begin() + 2) : 0),
+        w(list.size() > 3 ? *(list.Begin() + 3) : 0)
         {}
         
         template<Uint P>
         constexpr explicit Matrix(const Matrix<Type, P, 1>& value) noexcept
-        :   x(P > 0 ? value[0] : 0),
+        :
+        x(P > 0 ? value[0] : 0),
         y(P > 1 ? value[1] : 0),
         z(P > 2 ? value[2] : 0),
         w(P > 3 ? value[3] : 0)
         {}
         
-        constexpr Iterator begin() noexcept
+        constexpr Iterator Begin() noexcept
         {return Iterator(*this);}
         
-        constexpr ConstIterator begin() const noexcept
+        constexpr ConstIterator Begin() const noexcept
         {return ConstIterator(*this);}
         
-        constexpr Iterator end() noexcept
+        constexpr Iterator End() noexcept
         {return Iterator(*this) + 4;}
         
-        constexpr ConstIterator end() const noexcept
+        constexpr ConstIterator End() const noexcept
         {return ConstIterator(*this) + 4;}
         
-        constexpr ReverseIterator rbegin() noexcept
-        {return ReverseIterator(this->end());}
+        constexpr ReverseIterator ReverseBegin() noexcept
+        {return ReverseIterator(this->End());}
         
-        constexpr ConstReverseIterator rbegin() const noexcept
-        {return ConstReverseIterator(this->end());}
+        constexpr ConstReverseIterator ReverseBegin() const noexcept
+        {return ConstReverseIterator(this->End());}
         
-        constexpr ReverseIterator rend() noexcept
-        {return ReverseIterator(this->begin());}
+        constexpr ReverseIterator ReverseEnd() noexcept
+        {return ReverseIterator(this->Begin());}
         
-        constexpr ConstReverseIterator rend() const noexcept
-        {return ConstReverseIterator(this->begin());}
+        constexpr ConstReverseIterator ReverseEnd() const noexcept
+        {return ConstReverseIterator(this->Begin());}
         
-        constexpr ConstIterator cbegin() const noexcept
-        {return begin();}
+        constexpr ConstIterator ConstBegin() const noexcept
+        {return Begin();}
         
-        constexpr ConstIterator cend() const noexcept
-        {return end();}
+        constexpr ConstIterator ConstEnd() const noexcept
+        {return End();}
         
-        constexpr ConstReverseIterator crbegin() const noexcept
-        {return rbegin();}
+        constexpr ConstReverseIterator ConstReverseBegin() const noexcept
+        {return ReverseBegin();}
         
-        constexpr ConstReverseIterator crend() const noexcept
-        {return rend();}
+        constexpr ConstReverseIterator ConstReverseEnd() const noexcept
+        {return ReverseEnd();}
         
         constexpr Reference At(Uint i, Uint j)
         {
@@ -1067,7 +1087,7 @@ namespace mgo
     
     template<ArithmeticType T, std::size_t M, std::size_t N>
     constexpr bool operator==(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y) noexcept
-    {return std::equal(x.begin(), x.end(), y.begin(), y.end());}
+    {return std::equal(x.Begin(), x.End(), y.Begin(), y.End());}
     
     template<ArithmeticType T, std::size_t M, std::size_t N>
     constexpr bool operator!=(const Matrix<T, M, N>& x, const Matrix<T, M, N>& y) noexcept
