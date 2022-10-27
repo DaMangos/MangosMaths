@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef MangosMaths_hpp
+#define MangosMaths_hpp
 #ifdef MGO_USE_MATHS_DEFINES
 #define _USE_MATHS_DEFINES
 #define M_4PI       12.5663706143591729538505735331180115   /* 4pi          */
@@ -2196,4 +2196,5 @@ typedef mgo::Matrix<long double, 5, 1> long_double5;
 typedef mgo::Matrix<long double, 4, 1> long_double4;
 typedef mgo::Matrix<long double, 3, 1> long_double3;
 typedef mgo::Matrix<long double, 2, 1> long_double2;
+#endif
 #endif
