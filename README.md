@@ -1,17 +1,88 @@
 # MangoMath
-Light weight templated matrix and vector class.
+mgo::Matrix is a container that encapsulates fixed M x N size Matrix.
 
-To access the i j element without bounds checking, use the A(i, j)
-notation. To access the i j element with bounds checking, use the
-A.At(i, j) notation and finaly to access the underling array, use
-the A[k] notation. If your matrix is of type vector with size <= 4
-i.e. Matrix<Type, M, 1> where M = 1, 2, 3, 4, then you can access
-the elements the same as if it were a M by 1 matrix, and by A.x and
-A.y if M == 2, A.x, A.y, or A.z if M == 3, and A.x, A.y, A.z, or
-A.w if M == 4. Depending on the size of the matrix and the data type,
-some methords relevent to that matirx will become visable.  All
-Matrix types iterator retriever methords that can be use in the
-standard library's algorithms. These methords have the same name as
-the the ones the standard library uses for it's containers. To accses
-typedefs of common matrice types the define MGO_USE_MATRIX_DEFINES
-and to use common math mathematical constant then define MGO_USE_MATHS_DEFINES.
+This container acts very similar to a std::array holding M * N asthmatic types and has same semantics as a struct holding a C-style array. However When (M, N) equal (2, 1), (3, 1), or (4, 1) This container has same semantics as a struct holding 2, 3, or 4 asthmatic types. As this container is ment to mimic a M x N matrix, either M or N must be geater than 1 and M and N must be greater than 0 so the smallest matrix one can create is a 2 element matrix i.e. 2 x 1 or 1 x 2.
+
+To access common typedef of the matrices then define MGO_USE_MATRIX_TYPES and to access series of mathatical constent macros then define MGO_USE_MATHS_DEFINES. 
+
+Element access
+
+  At                            returns the element at the i, j location with bounds cheacking. O(1)
+
+  operator()                    returns the element at the i, j location without bounds cheacking. O(1)
+
+  operator[]                    returns the element at the k location in the array without bounds cheacking. O(1)
+
+
+Iterators
+
+  Begin                         returns an iterator to the beginning. O(1)
+  
+  End                           returns an iterator to the End. O(1)
+  
+  ReverseBegin                  returns a reverse iterator to the beginning. O(1)
+  
+  ReverseEnd                    returns a reverse iterator to the end. O(1)
+  
+  ConstBegin                    returns an const iterator to the beginning. O(1)
+  
+  ConstEnd                      returns an const iterator to the End. O(1)
+  
+  ConstReverseBegin             returns a const reverse iterator to the beginning. O(1)
+  
+  ConstReverseEnd               returns a const reverse iterator to the end. O(1)
+  
+  
+Operations
+
+  Fill                          Fill the container with specified value. O(N * M)
+  
+  Swap                          Swaps two rows or colums. O(M) or O(N) respectively.
+  (requires M > 1 && N > 1)
+  
+  Transpose                     Transposes the matrix. O(N * M). 
+  
+  RowEchelon                    Upper triangulates the matrix. O(M * N * (1.5 * M - 0.5))
+  
+  (requires M > 1 && N > 1 && floating point)
+  
+  ReducedRowEchelon             Preforms Gaussian elimination on the matrix. O(M * N * (2M - 1))
+  (requires M > 1 && N > 1 && floating point)
+
+  Det                           Finds the determinant of the matrix. O(M^2 * (1.5 * M - 0.5))
+  (requires M == N && M > 1)
+
+  Inverse                       Finds the Inverse of the matrix. O(M^2 * (4 * M - 2))
+  (requires M == N && M > 1)
+
+  Trace                         Finds the Trace of the matrix. O(M)
+  (requires M == N && M > 1)
+  
+  Dot                           Finds the dot product on two vectors. O(M)
+  (requires N = 1)
+  
+  LengthSquared                 Finds the dot product on two vectors. O(M)
+  (requires N = 1)
+  
+  Length                        Finds the euclidean distances. O(M)
+  (requires N = 1 && floating point)
+  
+  Angle                         Finds the angle between two vectors. O(3M)
+  (requires N = 1 && floating point)
+  
+  Normalize                     Returns the normalize vector. O(2M)
+  (requires N = 1 && floating point)
+
+  Theta()                       Returns the polar angle of the vector O(M)
+  (requires N = 1 && N = 3 && floating point)
+    
+  auto Phi()                    Returns the azimuth angle of the vector O(M)
+  (requires N = 1 && M < 4 && floating point)
+
+  Cross()                       Finds the dot product on two vectors. O(M * (M -1))
+  (requires N = 1 && N = 3 && floating point)
+
+  
+
+
+
