@@ -90,7 +90,7 @@ namespace mgo
         constexpr explicit Matrix(const Matrix<H, M, N>& value) noexcept
         {
             for (Uint k = 0; k < M * N; k++)
-                (*this)[k] = value[k];
+                (*this)[k] = static_cast<Type>(value[k]);
         }
         
         constexpr Matrix(std::initializer_list<Type> list, InitType space = rows) noexcept
@@ -519,8 +519,8 @@ namespace mgo
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 2, 1>& value) noexcept
         :
-        x(static_cast<T>(value.x)),
-        y(static_cast<T>(value.y))
+        x(static_cast<Type>(value.x)),
+        y(static_cast<Type>(value.y))
         {}
         
         constexpr Matrix(std::initializer_list<Type> list) noexcept
@@ -716,9 +716,9 @@ namespace mgo
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 3, 1>& value) noexcept
         :
-        x(static_cast<T>(value.x)),
-        y(static_cast<T>(value.y)),
-        z(static_cast<T>(value.z))
+        x(static_cast<Type>(value.x)),
+        y(static_cast<Type>(value.y)),
+        z(static_cast<Type>(value.z))
         {}
         
         constexpr Matrix(std::initializer_list<Type> list) noexcept
@@ -926,10 +926,10 @@ namespace mgo
         template<ArithmeticType H>
         constexpr explicit Matrix(const Matrix<H, 4, 1>& value) noexcept
         :
-        x(static_cast<T>(value.x)),
-        y(static_cast<T>(value.y)),
-        z(static_cast<T>(value.z)),
-        w(static_cast<T>(value.w))
+        x(static_cast<Type>(value.x)),
+        y(static_cast<Type>(value.y)),
+        z(static_cast<Type>(value.z)),
+        w(static_cast<Type>(value.w))
         {}
         
         constexpr Matrix(std::initializer_list<Type> list) noexcept
@@ -1144,168 +1144,6 @@ constexpr mgo::Matrix<T, M, N> fabs(const mgo::Matrix<T, M, N>& value) noexcept
 }
 
 #ifdef MGO_USE_MATRIX_TYPEDEF
-typedef mgo::Matrix<char, 9, 9> char9x9;
-typedef mgo::Matrix<char, 8, 9> char8x9;
-typedef mgo::Matrix<char, 7, 9> char7x9;
-typedef mgo::Matrix<char, 6, 9> char6x9;
-typedef mgo::Matrix<char, 5, 9> char5x9;
-typedef mgo::Matrix<char, 4, 9> char4x9;
-typedef mgo::Matrix<char, 3, 9> char3x9;
-typedef mgo::Matrix<char, 2, 9> char2x9;
-typedef mgo::Matrix<char, 1, 9> char1x9;
-typedef mgo::Matrix<char, 9, 8> char9x8;
-typedef mgo::Matrix<char, 8, 8> char8x8;
-typedef mgo::Matrix<char, 7, 8> char7x8;
-typedef mgo::Matrix<char, 6, 8> char6x8;
-typedef mgo::Matrix<char, 5, 8> char5x8;
-typedef mgo::Matrix<char, 4, 8> char4x8;
-typedef mgo::Matrix<char, 3, 8> char3x8;
-typedef mgo::Matrix<char, 2, 8> char2x8;
-typedef mgo::Matrix<char, 1, 8> char1x8;
-typedef mgo::Matrix<char, 9, 7> char9x7;
-typedef mgo::Matrix<char, 8, 7> char8x7;
-typedef mgo::Matrix<char, 7, 7> char7x7;
-typedef mgo::Matrix<char, 6, 7> char6x7;
-typedef mgo::Matrix<char, 5, 7> char5x7;
-typedef mgo::Matrix<char, 4, 7> char4x7;
-typedef mgo::Matrix<char, 3, 7> char3x7;
-typedef mgo::Matrix<char, 2, 7> char2x7;
-typedef mgo::Matrix<char, 1, 7> char1x7;
-typedef mgo::Matrix<char, 9, 6> char9x6;
-typedef mgo::Matrix<char, 8, 6> char8x6;
-typedef mgo::Matrix<char, 7, 6> char7x6;
-typedef mgo::Matrix<char, 6, 6> char6x6;
-typedef mgo::Matrix<char, 5, 6> char5x6;
-typedef mgo::Matrix<char, 4, 6> char4x6;
-typedef mgo::Matrix<char, 3, 6> char3x6;
-typedef mgo::Matrix<char, 2, 6> char2x6;
-typedef mgo::Matrix<char, 1, 6> char1x6;
-typedef mgo::Matrix<char, 9, 5> char9x5;
-typedef mgo::Matrix<char, 8, 5> char8x5;
-typedef mgo::Matrix<char, 7, 5> char7x5;
-typedef mgo::Matrix<char, 6, 5> char6x5;
-typedef mgo::Matrix<char, 5, 5> char5x5;
-typedef mgo::Matrix<char, 4, 5> char4x5;
-typedef mgo::Matrix<char, 3, 5> char3x5;
-typedef mgo::Matrix<char, 2, 5> char2x5;
-typedef mgo::Matrix<char, 1, 5> char1x5;
-typedef mgo::Matrix<char, 9, 4> char9x4;
-typedef mgo::Matrix<char, 8, 4> char8x4;
-typedef mgo::Matrix<char, 7, 4> char7x4;
-typedef mgo::Matrix<char, 6, 4> char6x4;
-typedef mgo::Matrix<char, 5, 4> char5x4;
-typedef mgo::Matrix<char, 4, 4> char4x4;
-typedef mgo::Matrix<char, 3, 4> char3x4;
-typedef mgo::Matrix<char, 2, 4> char2x4;
-typedef mgo::Matrix<char, 1, 4> char1x4;
-typedef mgo::Matrix<char, 9, 3> char9x3;
-typedef mgo::Matrix<char, 8, 3> char8x3;
-typedef mgo::Matrix<char, 7, 3> char7x3;
-typedef mgo::Matrix<char, 6, 3> char6x3;
-typedef mgo::Matrix<char, 5, 3> char5x3;
-typedef mgo::Matrix<char, 4, 3> char4x3;
-typedef mgo::Matrix<char, 3, 3> char3x3;
-typedef mgo::Matrix<char, 2, 3> char2x3;
-typedef mgo::Matrix<char, 1, 3> char1x3;
-typedef mgo::Matrix<char, 9, 2> char9x2;
-typedef mgo::Matrix<char, 8, 2> char8x2;
-typedef mgo::Matrix<char, 7, 2> char7x2;
-typedef mgo::Matrix<char, 6, 2> char6x2;
-typedef mgo::Matrix<char, 5, 2> char5x2;
-typedef mgo::Matrix<char, 4, 2> char4x2;
-typedef mgo::Matrix<char, 3, 2> char3x2;
-typedef mgo::Matrix<char, 2, 2> char2x2;
-typedef mgo::Matrix<char, 1, 2> char1x2;
-typedef mgo::Matrix<char, 9, 1> char9;
-typedef mgo::Matrix<char, 8, 1> char8;
-typedef mgo::Matrix<char, 7, 1> char7;
-typedef mgo::Matrix<char, 6, 1> char6;
-typedef mgo::Matrix<char, 5, 1> char5;
-typedef mgo::Matrix<char, 4, 1> char4;
-typedef mgo::Matrix<char, 3, 1> char3;
-typedef mgo::Matrix<char, 2, 1> char2;
-
-typedef mgo::Matrix<unsigned char, 9, 9> unsigned_char9x9;
-typedef mgo::Matrix<unsigned char, 8, 9> unsigned_char8x9;
-typedef mgo::Matrix<unsigned char, 7, 9> unsigned_char7x9;
-typedef mgo::Matrix<unsigned char, 6, 9> unsigned_char6x9;
-typedef mgo::Matrix<unsigned char, 5, 9> unsigned_char5x9;
-typedef mgo::Matrix<unsigned char, 4, 9> unsigned_char4x9;
-typedef mgo::Matrix<unsigned char, 3, 9> unsigned_char3x9;
-typedef mgo::Matrix<unsigned char, 2, 9> unsigned_char2x9;
-typedef mgo::Matrix<unsigned char, 1, 9> unsigned_char1x9;
-typedef mgo::Matrix<unsigned char, 9, 8> unsigned_char9x8;
-typedef mgo::Matrix<unsigned char, 8, 8> unsigned_char8x8;
-typedef mgo::Matrix<unsigned char, 7, 8> unsigned_char7x8;
-typedef mgo::Matrix<unsigned char, 6, 8> unsigned_char6x8;
-typedef mgo::Matrix<unsigned char, 5, 8> unsigned_char5x8;
-typedef mgo::Matrix<unsigned char, 4, 8> unsigned_char4x8;
-typedef mgo::Matrix<unsigned char, 3, 8> unsigned_char3x8;
-typedef mgo::Matrix<unsigned char, 2, 8> unsigned_char2x8;
-typedef mgo::Matrix<unsigned char, 1, 8> unsigned_char1x8;
-typedef mgo::Matrix<unsigned char, 9, 7> unsigned_char9x7;
-typedef mgo::Matrix<unsigned char, 8, 7> unsigned_char8x7;
-typedef mgo::Matrix<unsigned char, 7, 7> unsigned_char7x7;
-typedef mgo::Matrix<unsigned char, 6, 7> unsigned_char6x7;
-typedef mgo::Matrix<unsigned char, 5, 7> unsigned_char5x7;
-typedef mgo::Matrix<unsigned char, 4, 7> unsigned_char4x7;
-typedef mgo::Matrix<unsigned char, 3, 7> unsigned_char3x7;
-typedef mgo::Matrix<unsigned char, 2, 7> unsigned_char2x7;
-typedef mgo::Matrix<unsigned char, 1, 7> unsigned_char1x7;
-typedef mgo::Matrix<unsigned char, 9, 6> unsigned_char9x6;
-typedef mgo::Matrix<unsigned char, 8, 6> unsigned_char8x6;
-typedef mgo::Matrix<unsigned char, 7, 6> unsigned_char7x6;
-typedef mgo::Matrix<unsigned char, 6, 6> unsigned_char6x6;
-typedef mgo::Matrix<unsigned char, 5, 6> unsigned_char5x6;
-typedef mgo::Matrix<unsigned char, 4, 6> unsigned_char4x6;
-typedef mgo::Matrix<unsigned char, 3, 6> unsigned_char3x6;
-typedef mgo::Matrix<unsigned char, 2, 6> unsigned_char2x6;
-typedef mgo::Matrix<unsigned char, 1, 6> unsigned_char1x6;
-typedef mgo::Matrix<unsigned char, 9, 5> unsigned_char9x5;
-typedef mgo::Matrix<unsigned char, 8, 5> unsigned_char8x5;
-typedef mgo::Matrix<unsigned char, 7, 5> unsigned_char7x5;
-typedef mgo::Matrix<unsigned char, 6, 5> unsigned_char6x5;
-typedef mgo::Matrix<unsigned char, 5, 5> unsigned_char5x5;
-typedef mgo::Matrix<unsigned char, 4, 5> unsigned_char4x5;
-typedef mgo::Matrix<unsigned char, 3, 5> unsigned_char3x5;
-typedef mgo::Matrix<unsigned char, 2, 5> unsigned_char2x5;
-typedef mgo::Matrix<unsigned char, 1, 5> unsigned_char1x5;
-typedef mgo::Matrix<unsigned char, 9, 4> unsigned_char9x4;
-typedef mgo::Matrix<unsigned char, 8, 4> unsigned_char8x4;
-typedef mgo::Matrix<unsigned char, 7, 4> unsigned_char7x4;
-typedef mgo::Matrix<unsigned char, 6, 4> unsigned_char6x4;
-typedef mgo::Matrix<unsigned char, 5, 4> unsigned_char5x4;
-typedef mgo::Matrix<unsigned char, 4, 4> unsigned_char4x4;
-typedef mgo::Matrix<unsigned char, 3, 4> unsigned_char3x4;
-typedef mgo::Matrix<unsigned char, 2, 4> unsigned_char2x4;
-typedef mgo::Matrix<unsigned char, 1, 4> unsigned_char1x4;
-typedef mgo::Matrix<unsigned char, 9, 3> unsigned_char9x3;
-typedef mgo::Matrix<unsigned char, 8, 3> unsigned_char8x3;
-typedef mgo::Matrix<unsigned char, 7, 3> unsigned_char7x3;
-typedef mgo::Matrix<unsigned char, 6, 3> unsigned_char6x3;
-typedef mgo::Matrix<unsigned char, 5, 3> unsigned_char5x3;
-typedef mgo::Matrix<unsigned char, 4, 3> unsigned_char4x3;
-typedef mgo::Matrix<unsigned char, 3, 3> unsigned_char3x3;
-typedef mgo::Matrix<unsigned char, 2, 3> unsigned_char2x3;
-typedef mgo::Matrix<unsigned char, 1, 3> unsigned_char1x3;
-typedef mgo::Matrix<unsigned char, 9, 2> unsigned_char9x2;
-typedef mgo::Matrix<unsigned char, 8, 2> unsigned_char8x2;
-typedef mgo::Matrix<unsigned char, 7, 2> unsigned_char7x2;
-typedef mgo::Matrix<unsigned char, 6, 2> unsigned_char6x2;
-typedef mgo::Matrix<unsigned char, 5, 2> unsigned_char5x2;
-typedef mgo::Matrix<unsigned char, 4, 2> unsigned_char4x2;
-typedef mgo::Matrix<unsigned char, 3, 2> unsigned_char3x2;
-typedef mgo::Matrix<unsigned char, 2, 2> unsigned_char2x2;
-typedef mgo::Matrix<unsigned char, 1, 2> unsigned_char1x2;
-typedef mgo::Matrix<unsigned char, 9, 1> unsigned_char9;
-typedef mgo::Matrix<unsigned char, 8, 1> unsigned_char8;
-typedef mgo::Matrix<unsigned char, 7, 1> unsigned_char7;
-typedef mgo::Matrix<unsigned char, 6, 1> unsigned_char6;
-typedef mgo::Matrix<unsigned char, 5, 1> unsigned_char5;
-typedef mgo::Matrix<unsigned char, 4, 1> unsigned_char4;
-typedef mgo::Matrix<unsigned char, 3, 1> unsigned_char3;
-typedef mgo::Matrix<unsigned char, 2, 1> unsigned_char2;
-
 typedef mgo::Matrix<short int, 9, 9> short_int9x9;
 typedef mgo::Matrix<short int, 8, 9> short_int8x9;
 typedef mgo::Matrix<short int, 7, 9> short_int7x9;
