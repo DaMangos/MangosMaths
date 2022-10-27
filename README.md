@@ -78,7 +78,7 @@ Operations
   Theta()                                       :Returns the polar angle of the vector O(M)
   (requires N = 1 && N = 3 && floating point)
     
-  auto Phi()                                    :Returns the azimuth angle of the vector O(M)
+  Phi()                                         :Returns the azimuth angle of the vector O(M)
   (requires N = 1 && M < 4 && floating point)
 
   Cross(vector)                                 :Finds the dot product on two vectors. O(M * (M -1))
