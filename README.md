@@ -8,81 +8,80 @@ To access common typedef of the matrices then define MGO_USE_MATRIX_TYPES and to
 Element access
 --------------
 
-  At                           :Rreturns the element at the i, j location with bounds cheacking. O(1)
+  At(i, j)                                      :Rreturns the element at the i, j location with bounds cheacking. O(1)
 
-  operator()                   :Returns the element at the i, j location without bounds cheacking. O(1)
+  operator(i, j)                                :Returns the element at the i, j location without bounds cheacking. O(1)
 
-  operator[]                   :Returns the element at the k location in the array without bounds cheacking. O(1)
+  operator[k]                                   :Returns the element at the k location in the array without bounds cheacking. O(1)
 
 
 Iterators
 ---------
 
-  Begin                        :Returns an iterator to the beginning. O(1)
+  Begin()                                       :Returns an iterator to the beginning. O(1)
   
-  End                          :Returns an iterator to the End. O(1)
+  End()                                         :Returns an iterator to the End. O(1)
   
-  ReverseBegin                 :Returns a reverse iterator to the beginning. O(1)
+  ReverseBegin()                                :Returns a reverse iterator to the beginning. O(1)
   
-  ReverseEnd                   :Returns a reverse iterator to the end. O(1)
+  ReverseEnd()                                  :Returns a reverse iterator to the end. O(1)
   
-  ConstBegin                   :Returns an const iterator to the beginning. O(1)
+  ConstBegin()                                  :Returns an const iterator to the beginning. O(1)
   
-  ConstEnd                     :Returns an const iterator to the End. O(1)
+  ConstEnd()                                    :Returns an const iterator to the End. O(1)
+    
+  ConstReverseBegin()                           :Returns a const reverse iterator to the beginning. O(1)
   
-  ConstReverseBegin            :Returns a const reverse iterator to the beginning. O(1)
-  
-  ConstReverseEnd              :Returns a const reverse iterator to the end. O(1)
-  
+  ConstReverseEnd()                             :Returns a const reverse iterator to the end. O(1)
   
 Operations
 ----------
 
-  Fill                         :Fill the container with specified value. O(N * M)
+  Fill(value)                                   :Fill the container with specified value. O(N * M)
   
-  Swap                         :Swaps two rows or colums. O(M) or O(N) respectively.
+  Swap(x, y, space)                             :Swaps rows or colums x and y. O(M) or O(N) respectively.
   (requires M > 1 && N > 1)
   
-  Transpose                    :Transposes the matrix. O(N * M). 
+  Transpose()                                   :Transposes the matrix. O(N * M). 
   
-  RowEchelon                   :Upper triangulates the matrix. O(M * N * (1.5 * M - 0.5))
+  RowEchelon()                                  :Upper triangulates the matrix. O(M * N * (1.5 * M - 0.5))
   
   (requires M > 1 && N > 1 && f:oating point)
   
-  ReducedRowEchelon            :Preforms Gaussian elimination on the matrix. O(M * N * (2M - 1))
+  ReducedRowEchelon()                           :Preforms Gaussian elimination on the matrix. O(M * N * (2M - 1))
   (requires M > 1 && N > 1 && f:oating point)
 
-  Det                          :Finds the determinant of the matrix. O(M^2 * (1.5 * M - 0.5))
+  Det()                                         :Finds the determinant of the matrix. O(M^2 * (1.5 * M - 0.5))
   (requires M == N && M > 1)
 
-  Inverse                      :Finds the Inverse of the matrix. O(M^2 * (4 * M - 2))
+  Inverse()                                     :Finds the Inverse of the matrix. O(M^2 * (4 * M - 2))
   (requires M == N && M > 1)
 
-  Trace                        :Finds the Trace of the matrix. O(M)
+  Trace()                                       :Finds the Trace of the matrix. O(M)
   (requires M == N && M > 1)
   
-  Dot                          :Finds the dot product on two vectors. O(M)
+  Dot()                                         :Finds the dot product on two vectors. O(M)
   (requires N = 1)
   
-  LengthSquared                :Finds the dot product on two vectors. O(M)
+  LengthSquared()                               :Finds the dot product on two vectors. O(M)
   (requires N = 1)
   
-  Length                       :Finds the euclidean distances. O(M)
+  Length()                                      :Finds the euclidean distances. O(M)
   (requires N = 1 && floating point)
   
-  Angle                        :Finds the angle between two vectors. O(3M)
+  Angle(vector)                                 :Finds the angle between two vectors. O(3M)
   (requires N = 1 && floating point)
   
-  Normalize                    :Returns the normalize vector. O(2M)
+  Normalize()                                   :Returns the normalize vector. O(2M)
   (requires N = 1 && floating point)
 
-  Theta()                      :Returns the polar angle of the vector O(M)
+  Theta()                                       :Returns the polar angle of the vector O(M)
   (requires N = 1 && N = 3 && floating point)
     
-  auto Phi()                   :Returns the azimuth angle of the vector O(M)
+  auto Phi()                                    :Returns the azimuth angle of the vector O(M)
   (requires N = 1 && M < 4 && floating point)
 
-  Cross()                      :Finds the dot product on two vectors. O(M * (M -1))
+  Cross(vector)                                 :Finds the dot product on two vectors. O(M * (M -1))
   (requires N = 1 && N = 3 && floating point)
 
   
