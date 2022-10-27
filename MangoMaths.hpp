@@ -1143,7 +1143,7 @@ constexpr mgo::Matrix<T, M, N> fabs(const mgo::Matrix<T, M, N>& value) noexcept
     return out;
 }
 
-#ifdef MGO_USE_MATRIX_DEFINES
+#ifdef MGO_USE_MATRIX_TYPEDEF
 typedef mgo::Matrix<char, 9, 9> char9x9;
 typedef mgo::Matrix<char, 8, 9> char8x9;
 typedef mgo::Matrix<char, 7, 9> char7x9;
