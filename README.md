@@ -45,7 +45,6 @@ Operations
   Transpose()                                   :Transposes the matrix. O(N * M). 
   
   RowEchelon()                                  :Upper triangulates the matrix. O(M * N * (1.5 * M - 0.5))
-  
   (requires M > 1 && N > 1 && f:oating point)
   
   ReducedRowEchelon()                           :Preforms Gaussian elimination on the matrix. O(M * N * (2M - 1))
